@@ -226,12 +226,14 @@
 <div class="nav">
   <div class="nav-tab active" onclick="showTab('pacing',this)">📊 Deployment Pacing</div>
   <div class="nav-tab" onclick="showTab('construction',this)">🏗 Portfolio Construction</div>
+  <div class="nav-tab" onclick="showTab('spv',this)">🤝 SPV Co-Invest</div>
   <div class="nav-tab" onclick="showTab('returns',this)">📈 Return Scenarios</div>
   <div class="nav-tab" onclick="showTab('actuals',this)">🔍 Plan vs. Actuals</div>
   <div class="nav-tab" onclick="showTab('sensitivity',this)">🔮 Pipeline Sensitivity</div>
   <div class="nav-tab" onclick="showTab('ownership',this)">🧮 Ownership Calculator</div>
   <div class="nav-tab" onclick="showTab('timing',this)">⏱ Deal Timing</div>
   <div class="nav-tab" onclick="showTab('rankings',this)">📋 Rankings & Reserves</div>
+  <div class="nav-tab" onclick="showTab('reserveopt',this)">♟️ Reserve Strategy</div>
   <div class="nav-tab" onclick="showTab('rankhistory',this)">📜 Historical Rankings</div>
   <div class="nav-tab" onclick="showTab('execscore',this)">🎯 Execution Score</div>
 </div>
@@ -471,6 +473,117 @@
         </tbody></table>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- ══════════════ TAB: SPV CO-INVEST ══════════════ -->
+<div id="tab-spv" class="tab-content">
+  <div class="insight blue" style="margin-bottom:14px;">
+    <div class="insight-title">🤝 Network SPV Co-Invest — Alongside Fund 3 Positions</div>
+    SPV / network checks that invested into the same companies as Fund 3. <strong>These are network co-investment vehicles, not Fund 3 capital, and are excluded from the reserve model</strong> (see reserve-vs-network rule). This tab tracks total FLF-network exposure per company; it does not change Fund 3 cost basis, ownership, or DPI. Source: FLF Investments Details → Investment_Tracker. ⚡ [source 06/24]
+  </div>
+  <div class="kpi-row kpi-4">
+    <div class="kpi b"><div class="kpi-label">Total SPV Co-Invest</div><div class="kpi-val">$6.19M</div><div class="kpi-sub">10 SPV rounds</div></div>
+    <div class="kpi g"><div class="kpi-label">Companies w/ Co-Invest</div><div class="kpi-val">8 of 15</div><div class="kpi-sub">7 Fund 3 cos have none</div></div>
+    <div class="kpi t"><div class="kpi-label">Fund 3 (same rounds)</div><div class="kpi-val">$9.26M</div><div class="kpi-sub">Fund capital in matched rounds</div></div>
+    <div class="kpi a"><div class="kpi-label">Network : Fund 3</div><div class="kpi-val">0.67×</div><div class="kpi-sub">SPV $ per Fund 3 $</div></div>
+  </div>
+  <div class="card mb">
+    <div class="card-title">SPV Co-Invest by Round <span class="hint">Network vehicle checks alongside Fund 3 · not reserve capital</span></div>
+    <table class="dt">
+      <thead><tr><th>Company</th><th>Round</th><th style="text-align:right;">Fund 3 (same round)</th><th style="text-align:right;">SPV Co-Invest</th><th style="text-align:right;">Combined FLF Network</th></tr></thead>
+      <tbody>
+        <tr><td>Worth AI</td><td>2024.08 Series Seed-1</td><td style="text-align:right;">$1,000,858</td><td style="text-align:right;">$1,258,000</td><td style="text-align:right;"><strong>$2,258,858</strong></td></tr>
+        <tr><td>Worth AI</td><td>2026.02 Series A</td><td style="text-align:right;">$393,797</td><td style="text-align:right;">$371,576</td><td style="text-align:right;"><strong>$765,373</strong></td></tr>
+        <tr><td>Archive Technologies</td><td>2025.12 Series A</td><td style="text-align:right;">$1,999,993</td><td style="text-align:right;">$1,064,500</td><td style="text-align:right;"><strong>$3,064,493</strong></td></tr>
+        <tr><td>Vali Cyber</td><td>2023.11 Series Seed</td><td style="text-align:right;">$1,000,000</td><td style="text-align:right;">$1,055,000</td><td style="text-align:right;"><strong>$2,055,000</strong></td></tr>
+        <tr><td>Rebel</td><td>2025.04 Series B-1</td><td style="text-align:right;">$1,411,199</td><td style="text-align:right;">$640,000</td><td style="text-align:right;"><strong>$2,051,199</strong></td></tr>
+        <tr><td>Curated For You</td><td>2025.07 Conv. Note</td><td style="text-align:right;">$1,458,580</td><td style="text-align:right;">$588,500</td><td style="text-align:right;"><strong>$2,047,080</strong></td></tr>
+        <tr><td>Liminal AI</td><td>2025.12 Series Seed 4</td><td style="text-align:right;">$499,999</td><td style="text-align:right;">$478,000</td><td style="text-align:right;"><strong>$977,999</strong></td></tr>
+        <tr><td>Iris Technologies</td><td>2025.03 Series Seed-1</td><td style="text-align:right;">$1,000,000</td><td style="text-align:right;">$426,000</td><td style="text-align:right;"><strong>$1,426,000</strong></td></tr>
+        <tr><td>Iris Technologies</td><td>2025.12 Series A <span class="hint">network-only</span></td><td style="text-align:right;">$0</td><td style="text-align:right;">$152,770</td><td style="text-align:right;"><strong>$152,770</strong></td></tr>
+        <tr><td>Manifest</td><td>2024.05 Post-Money SAFE</td><td style="text-align:right;">$500,000</td><td style="text-align:right;">$158,654</td><td style="text-align:right;"><strong>$658,654</strong></td></tr>
+        <tr class="tot"><td>Total</td><td>10 rounds · 8 companies</td><td style="text-align:right;">$9,264,427</td><td style="text-align:right;color:var(--blue,#4a9eff);">$6,193,000</td><td style="text-align:right;color:var(--green-light);"><strong>$15,457,427</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="insight amber">
+    <div class="insight-title">⚠️ Notes &amp; Flags</div>
+    <strong>Iris 2025.12 Series A is network-only</strong> — the SPV followed into the Series A but Fund 3 did not, so this is pure network exposure with no Fund 3 reserve follow-on. &nbsp;|&nbsp; <strong>7 Fund 3 companies have no SPV co-invest:</strong> Autonoma, Brox.AI, Enrichly, OpenHome, RapidFort, Opus Health, Acceler8. &nbsp;|&nbsp; <strong>Funding status:</strong> the 2026 rounds (Worth Series A, Opus/Acceler8) may be partially uncalled in the source export — confirm wires before treating as deployed.
+  </div>
+</div>
+
+<!-- ══════════════ TAB: RESERVE STRATEGY ══════════════ -->
+<div id="tab-reserveopt" class="tab-content">
+  <div class="insight blue" style="margin-bottom:14px;">
+    <div class="insight-title">♟️ Reserve Strategy — Optimize &amp; Simulate</div>
+    Model the reserve pool two ways: <strong>follow-on into existing positions</strong> vs. <strong>new initial checks (more shots on goal)</strong>. The split slider tests Saxon's strategy change. The Priority Score ranks follow-on candidates on a weighted model (marginal DPI weighted highest); the Raise &amp; Runway watch flags companies raising or running low in the next 2-3 quarters with preemption guidance. All figures are a planning model on the dashboard's stage exit assumptions; tune every input live. ⚡ [source 06/24]
+  </div>
+
+  <!-- SECTION 1: SIMULATOR -->
+  <div class="card mb">
+    <div class="card-title">1 · Strategy Simulator <span class="hint">follow-on vs. new initials · adjust and watch DPI move</span></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:10px 0 4px;">
+      <label style="font-size:11px;color:var(--text-dim);">Reserve pool available ($M)<br><input id="ro-pool" type="number" step="0.1" value="22.09" oninput="buildReserveOpt()" style="width:100%;margin-top:4px;background:var(--card2);border:1px solid var(--border);color:var(--text);padding:5px;border-radius:5px;"></label>
+      <label style="font-size:11px;color:var(--text-dim);">Follow-on round step-up (×)<br><input id="ro-stepup" type="number" step="0.1" value="2.0" oninput="buildReserveOpt()" style="width:100%;margin-top:4px;background:var(--card2);border:1px solid var(--border);color:var(--text);padding:5px;border-radius:5px;"></label>
+      <label style="font-size:11px;color:var(--text-dim);">Concentration cap (% of pool / name)<br><input id="ro-conc" type="number" step="1" value="15" oninput="buildReserveOpt()" style="width:100%;margin-top:4px;background:var(--card2);border:1px solid var(--border);color:var(--text);padding:5px;border-radius:5px;"></label>
+      <label style="font-size:11px;color:var(--text-dim);">Exit scenario<br><select id="ro-exit" onchange="buildReserveOpt()" style="width:100%;margin-top:4px;background:var(--card2);border:1px solid var(--border);color:var(--text);padding:5px;border-radius:5px;"><option value="base">Base</option><option value="updated">Updated</option><option value="bear">Bear</option></select></label>
+    </div>
+    <div style="margin:14px 0 6px;">
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-dim);margin-bottom:4px;"><span>Reserve split</span><span id="ro-split-lbl" style="color:var(--green-light);font-weight:600;"></span></div>
+      <input id="ro-split" type="range" min="0" max="100" value="60" oninput="buildReserveOpt()" style="width:100%;">
+      <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-muted);"><span>← all follow-on</span><span>all new initials →</span></div>
+    </div>
+    <div style="font-size:11px;color:var(--text-dim);margin:10px 0 4px;">New-initial stage mix (% of new-initial bucket)</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+      <label style="font-size:11px;color:var(--text-dim);">Preseed (entry $0.50M)<br><input id="ro-mix-pre" type="number" step="5" value="40" oninput="buildReserveOpt()" style="width:100%;margin-top:4px;background:var(--card2);border:1px solid var(--border);color:var(--text);padding:5px;border-radius:5px;"></label>
+      <label style="font-size:11px;color:var(--text-dim);">Seed (entry $0.70M)<br><input id="ro-mix-seed" type="number" step="5" value="40" oninput="buildReserveOpt()" style="width:100%;margin-top:4px;background:var(--card2);border:1px solid var(--border);color:var(--text);padding:5px;border-radius:5px;"></label>
+      <label style="font-size:11px;color:var(--text-dim);">Series A (entry $1.00M)<br><input id="ro-mix-serA" type="number" step="5" value="20" oninput="buildReserveOpt()" style="width:100%;margin-top:4px;background:var(--card2);border:1px solid var(--border);color:var(--text);padding:5px;border-radius:5px;"></label>
+    </div>
+    <div class="kpi-row kpi-4" style="margin-top:16px;">
+      <div class="kpi t"><div class="kpi-label">New Shots on Goal</div><div class="kpi-val" id="ro-kpi-shots">—</div><div class="kpi-sub" id="ro-kpi-shots-sub">new initial checks</div></div>
+      <div class="kpi g"><div class="kpi-label">Follow-on Deployed</div><div class="kpi-val" id="ro-kpi-foco">—</div><div class="kpi-sub" id="ro-kpi-foco-sub">companies defended</div></div>
+      <div class="kpi b"><div class="kpi-label">Projected Gross Return</div><div class="kpi-val" id="ro-kpi-return">—</div><div class="kpi-sub" id="ro-kpi-return-sub">follow-on + new initials</div></div>
+      <div class="kpi a"><div class="kpi-label">Δ Gross DPI vs all-follow-on</div><div class="kpi-val" id="ro-kpi-delta">—</div><div class="kpi-sub">strategy shift impact</div></div>
+    </div>
+    <div id="ro-sim-summary" style="font-size:11px;color:var(--text-muted);margin-top:10px;line-height:1.5;"></div>
+  </div>
+
+  <!-- SECTION 2: PRIORITY SCORE -->
+  <div class="card mb">
+    <div class="card-title">2 · Reserve Priority Score <span class="hint">weighted composite · marginal DPI weighted highest · edit weights &amp; conviction inline</span></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:8px;margin:10px 0;padding:10px;background:var(--card2);border-radius:6px;">
+      <label style="font-size:10px;color:var(--text-dim);">Marginal DPI<br><input id="ro-w-mdpi" type="number" value="25" oninput="buildReserveOpt()" style="width:100%;margin-top:3px;background:var(--card);border:1px solid var(--border);color:var(--green-light);padding:4px;border-radius:4px;font-weight:600;"></label>
+      <label style="font-size:10px;color:var(--text-dim);">Exp. Value ×P<br><input id="ro-w-ev" type="number" value="15" oninput="buildReserveOpt()" style="width:100%;margin-top:3px;background:var(--card);border:1px solid var(--border);color:var(--text);padding:4px;border-radius:4px;"></label>
+      <label style="font-size:10px;color:var(--text-dim);">Execution<br><input id="ro-w-exec" type="number" value="15" oninput="buildReserveOpt()" style="width:100%;margin-top:3px;background:var(--card);border:1px solid var(--border);color:var(--text);padding:4px;border-radius:4px;"></label>
+      <label style="font-size:10px;color:var(--text-dim);">Rank<br><input id="ro-w-rank" type="number" value="10" oninput="buildReserveOpt()" style="width:100%;margin-top:3px;background:var(--card);border:1px solid var(--border);color:var(--text);padding:4px;border-radius:4px;"></label>
+      <label style="font-size:10px;color:var(--text-dim);">Own gap→target<br><input id="ro-w-gap" type="number" value="10" oninput="buildReserveOpt()" style="width:100%;margin-top:3px;background:var(--card);border:1px solid var(--border);color:var(--text);padding:4px;border-radius:4px;"></label>
+      <label style="font-size:10px;color:var(--text-dim);">Capital eff.<br><input id="ro-w-capeff" type="number" value="10" oninput="buildReserveOpt()" style="width:100%;margin-top:3px;background:var(--card);border:1px solid var(--border);color:var(--text);padding:4px;border-radius:4px;"></label>
+      <label style="font-size:10px;color:var(--text-dim);">Round pricing<br><input id="ro-w-price" type="number" value="8" oninput="buildReserveOpt()" style="width:100%;margin-top:3px;background:var(--card);border:1px solid var(--border);color:var(--text);padding:4px;border-radius:4px;"></label>
+      <label style="font-size:10px;color:var(--text-dim);">Current own<br><input id="ro-w-own" type="number" value="7" oninput="buildReserveOpt()" style="width:100%;margin-top:3px;background:var(--card);border:1px solid var(--border);color:var(--text);padding:4px;border-radius:4px;"></label>
+    </div>
+    <div style="overflow-x:auto;">
+    <table class="dt">
+      <thead><tr>
+        <th>#</th><th>Company</th><th>Score</th><th title="Marginal MOIC on the next reserve dollar at the follow-on round price">Marg. MOIC</th><th title="Expected exit value of our stake × probability of outcome">E×P ($M)</th><th title="Q1 2026 forecast ÷ 2026 board plan">Exec</th><th>Own% / Tgt</th><th title="Months of runway (Q1 2026)">Runway</th><th title="Pro rata rights available">Pro-rata</th><th title="Conviction override, -2 to +2">Conv ✎</th><th title="Recommended follow-on allocation under current split">Rec $</th>
+      </tr></thead>
+      <tbody id="ro-priority-tbody"></tbody>
+    </table>
+    </div>
+  </div>
+
+  <!-- SECTION 3: RAISE & RUNWAY WATCH -->
+  <div class="card mb">
+    <div class="card-title">3 · Raise &amp; Runway Watch <span class="hint">raising or running low in next 2-3 quarters · preemption guidance</span></div>
+    <div style="overflow-x:auto;">
+    <table class="dt">
+      <thead><tr>
+        <th>Company</th><th title="Runway in months, Q1 2026 actuals">Runway</th><th>Cash ($M)</th><th>Burn ($M/mo)</th><th>Next Raise</th><th>Pro-rata</th><th>Own%</th><th title="Pro rata $ to maintain ownership through the next round">Maintain $</th><th>Suggested Action</th>
+      </tr></thead>
+      <tbody id="ro-runway-tbody"></tbody>
+    </table>
+    </div>
+    <div style="font-size:10px;color:var(--text-muted);margin-top:8px;">Threshold: runway ≤ 9 months (≈3 quarters), next raise within 3 quarters, or missing financials. Rebel and Vali Cyber did not submit Q1 2026 — flagged as data gaps.</div>
   </div>
 </div>
 
@@ -1075,6 +1188,7 @@ function showTab(name,el){
     setTimeout(()=>window.dispatchEvent(new Event('resize')),60);
     if(name==='timing') setTimeout(()=>{try{buildTimingGantt();}catch(e){}},80);
     if(name==='execscore') setTimeout(()=>{try{buildExecutionScore();}catch(e){console.error(e);}},80);
+    if(name==='reserveopt') setTimeout(()=>{try{buildReserveOpt();}catch(e){console.error(e);}},80);
     if(name==='returns') setTimeout(()=>{try{buildReturnScenariosPerCo();}catch(e){console.error(e);}},80);
     if(name==='pacing'){
       setTimeout(()=>{try{buildCapitalDonut();}catch(e){console.error(e);}},50);
@@ -2271,6 +2385,47 @@ const portfolioMeta=portfolioCompanies.map((name,i)=>({
   [11, {realMoic:1.40}],  // Worth AI — 1.40× per Q1 2026 report
 ].forEach(([i,ov])=>Object.assign(portfolioMeta[i],ov));
 
+// ── BOARD-APPROVED PLAN 2026 + NEXT-RAISE TIMING (2026-06-24) ────────────────
+// Source: board-approved 2026 plan (Saxon). Promotes the 2026 revenue figures from
+// reference-only Catch Up to BAP (primary Yr2 benchmark). bap2026Rev = board 2026
+// revenue; GM not provided in board plan → bap2026GM stays null (2025 GM unchanged,
+// already in execBaselines). nextRaiseQ = "Fume Date / Next Round" normalized to
+// Q-format (parseQ accepts only "Q# YYYY"): "December 2026" → "Q4 2026"; "N/A" and
+// blanks left empty. ⚠️ Vali (Q2 2025) and RapidFort (Q4 2025) are past-dated — confirm
+// whether they have since raised (set actualRaiseQ) or are overdue.
+[
+  [0,  {bap2026Rev:17600796, nextRaiseQ:'Q4 2026'}], // Archive — fume Dec 2026
+  [1,  {bap2026Rev:16135000, nextRaiseQ:''}],         // Autonoma — N/A (not raising)
+  [2,  {bap2026Rev:20671666, nextRaiseQ:'Q4 2026'}], // Brox AI — fume Dec 2026
+  [3,  {bap2026Rev:12300000, nextRaiseQ:''}],         // Curated For You — N/A (not raising)
+  [4,  {bap2026Rev: 5330000, nextRaiseQ:''}],         // IRIS AI — not provided
+  [5,  {bap2026Rev: 5459004, nextRaiseQ:''}],         // Liminal AI — not provided
+  [6,  {bap2026Rev:null,     nextRaiseQ:'Q1 2028'}], // Manifest — pre-revenue, no 2026 BAP
+  [7,  {bap2026Rev:null,     nextRaiseQ:'Q2 2026'}], // OpenHome — pre-revenue, no 2026 BAP
+  [8,  {bap2026Rev:51567702, nextRaiseQ:'Q4 2025'}], // RapidFort — fume past-dated, confirm
+  [9,  {bap2026Rev:65622124, nextRaiseQ:'Q2 2027'}], // Rebel Corporation
+  [10, {bap2026Rev:32661267, nextRaiseQ:'Q2 2025'}], // Vali Cyber — fume past-dated, confirm
+  [11, {bap2026Rev:23399158, nextRaiseQ:''}],         // Worth AI — not provided
+  [12, {bap2026Rev:null,     nextRaiseQ:''}],         // Youth Enrichments — no board plan
+].forEach(([i,ov])=>Object.assign(portfolioMeta[i],ov));
+
+// ── OPENHOME FINANCING UPDATE (2026-06-24) ──────────────────────────────────
+// OpenHome (index 7) signed a $100M post-money SAFE cap (confirmed) — this is now
+// the company's CURRENT round price and is used by the reserve model to price a
+// follow-on (safeCap drives followPMV). Separately, allegedly received a $125M SAFE
+// — UNCONFIRMED, must verify before relying on it (not used in any calc). The signed
+// SAFE extends runway and resolves the Q1 2026 7.3mo runway flag. Entry cost basis is
+// unchanged. Flagged breakout: highest binary outcome of becoming a portfolio breakout
+// (convDefault +2 reflects conviction; binary = high upside, lower base probability).
+Object.assign(portfolioMeta[7],{
+  actualRaiseQ:'Q2 2026',
+  safeCap:100,            // CURRENT post-money SAFE cap ($M), confirmed — model uses this for follow-on price
+  safeAllegedCap:125,     // alleged second SAFE cap ($M), UNCONFIRMED — display only
+  raiseNote:true,
+  breakout:true,          // highest binary breakout potential in the portfolio
+  convDefault:2           // default conviction override (+2) seeded into the priority score
+});
+
 let rankExit='base';
 let rankSort='dpi';
 let reserveChartInst=null;
@@ -3305,6 +3460,195 @@ function fmt$M(v){
   return '$'+v.toFixed(0);
 }
 function fmtPct(v){return v==null?'—':(v*100).toFixed(0)+'%';}
+
+// ── RESERVE STRATEGY OPTIMIZER ───────────────────────────────────────────────
+// Self-contained model over the Fund 3 core 13. Reuses actualDeals (entry check +
+// entry PMV), stageData (target own%, dilution), exitAssumptions (stage exit PMV),
+// portfolioMeta (pro rata, realMoic, yoyGrowth, cash), execQ1_2026Actuals
+// (runway/burn/arr), and the 2026 BAP / Q1 forecast for execution attainment.
+let _roConv=null;     // per-company conviction override (-2..+2)
+let _roP=null;        // per-company P(outcome) override (fraction); null = derived
+function roGV(id,def){const el=document.getElementById(id);if(!el)return def;const v=parseFloat(el.value);return isFinite(v)?v:def;}
+function roClamp(v,a,b){return Math.max(a,Math.min(b,v));}
+function roM(x){return (x<0?'-$':'$')+Math.abs(x).toFixed(2)+'M';}
+function roPct(x){return (x*100).toFixed(1)+'%';}
+function _roParseQ(str){if(!str||!str.trim())return null;const m=str.trim().match(/^Q([1-4])\s*(\d{4})$/i);return m?{q:+m[1],y:+m[2]}:null;}
+
+function buildReserveOpt(){
+  const N=13;
+  if(!_roConv) _roConv=Array.from({length:N},(_,i)=>portfolioMeta[i].convDefault||0);
+  if(!_roP)    _roP=Array(N).fill(null);
+  const exitsKey=(document.getElementById('ro-exit')||{}).value||'base';
+  const exits=exitAssumptions[exitsKey];
+  const stepUp=roGV('ro-stepup',2.0);
+  const pool=roGV('ro-pool',22.09);
+  const splitNew=roClamp(roGV('ro-split',60)/100,0,1);
+  const concCap=roGV('ro-conc',15)/100;
+  document.getElementById('ro-split-lbl').textContent=Math.round(splitNew*100)+'% new initials / '+Math.round((1-splitNew)*100)+'% follow-on';
+  const wRaw={mdpi:roGV('ro-w-mdpi',25),ev:roGV('ro-w-ev',15),exec:roGV('ro-w-exec',15),rank:roGV('ro-w-rank',10),gap:roGV('ro-w-gap',10),capeff:roGV('ro-w-capeff',10),price:roGV('ro-w-price',8),own:roGV('ro-w-own',7)};
+  const wSum=Object.values(wRaw).reduce((a,b)=>a+b,0)||1;
+
+  // ── per-company raw factors ──
+  const rows=[];
+  for(let i=0;i<N;i++){
+    const d=actualDeals[i], s=stageData[d.si], m=portfolioMeta[i], q1=execQ1_2026Actuals[i];
+    const bap=(m.bap2026Rev??exec2026Q4Forecast[i]?.rev??null);
+    const fcast=exec2026Q1Forecast[i]?exec2026Q1Forecast[i].rev:null;
+    const entryOwn=d.pmv? d.check/d.pmv : s.own;
+    const targetOwn=s.own;
+    const exit=exits[d.si], dil=s.dil;
+    const grossRet=entryOwn*(1-dil)*exit;                       // $M base-case stake value at exit
+    const followPMV=(m.safeCap!=null? m.safeCap : (d.pmv||0)*stepUp); // confirmed current SAFE cap overrides the step-up proxy
+    const marginalMOIC=followPMV>0? (1-dil)*exit/followPMV : 0;  // MOIC on the next reserve $
+    const maintain=entryOwn*followPMV*dil;                      // $M pro rata to hold ownership through next round
+    const exec01=(bap&&fcast!=null)? roClamp(fcast/bap,0,1.5)/1.5 : null;
+    let capEffRaw=null;
+    if(q1 && q1.arr!=null && q1.burn!=null){
+      const g=m.yoyGrowth;
+      const netNew=(g&&g>0)? q1.arr*(g/(1+g)) : q1.arr*0.05;
+      const burnMult=(q1.burn*12)/Math.max(netNew,1);
+      const runwayScore=Math.min(1,(q1.runway||0)/24);
+      capEffRaw=(1/(1+Math.max(0,burnMult)))*0.6 + runwayScore*0.4;
+    }
+    const realMoic=parseFloat(m.realMoic)||null;
+    const priceRaw=realMoic? 1/realMoic : null;                 // cheaper to add (lower mark) = higher
+    rows.push({i,name:portfolioCompanies[i],stage:s.name,chip:s.chip,d,s,m,entryOwn,targetOwn,exit,dil,grossRet,followPMV,marginalMOIC,maintain,exec01,capEffRaw,priceRaw,
+      ownGap:Math.max(0,targetOwn-entryOwn),runway:q1?q1.runway:null,arr:q1?q1.arr:null,burn:q1?q1.burn:null,
+      cash:(m.cashBalance!=null?m.cashBalance/1e6:null),proRata:m.proRata,nextRaiseQ:m.nextRaiseQ});
+  }
+  // rank by base-case gross return
+  [...rows].sort((a,b)=>b.grossRet-a.grossRet).forEach((r,idx)=>{r.rankScore01=(N-1>0)?(N-1-idx)/(N-1):0.5;r.rankPos=idx+1;});
+  // expected value with probability
+  rows.forEach(r=>{
+    r.P=(_roP[r.i]!=null)?_roP[r.i]:roClamp(0.1+0.6*(r.exec01==null?0.4:r.exec01)+0.3*r.rankScore01,0.05,0.95);
+    r.EV=r.exit*r.entryOwn*r.P;
+  });
+  // normalize 0..1 across cohort
+  const norm=(key)=>{const vals=rows.map(r=>r[key]).filter(v=>v!=null&&isFinite(v));if(!vals.length)return ()=>0.5;const mn=Math.min(...vals),mx=Math.max(...vals);return v=>(v==null||!isFinite(v))?0.5:(mx>mn?(v-mn)/(mx-mn):0.5);};
+  const nMdpi=norm('marginalMOIC'),nEV=norm('EV'),nGap=norm('ownGap'),nCap=norm('capEffRaw'),nPrice=norm('priceRaw'),nOwn=norm('entryOwn');
+  rows.forEach(r=>{
+    r.f_mdpi=nMdpi(r.marginalMOIC);r.f_ev=nEV(r.EV);r.f_exec=(r.exec01==null?0.5:r.exec01);r.f_rank=r.rankScore01;
+    r.f_gap=nGap(r.ownGap);r.f_capeff=nCap(r.capEffRaw);r.f_price=nPrice(r.priceRaw);r.f_own=nOwn(r.entryOwn);
+    const base=(wRaw.mdpi*r.f_mdpi+wRaw.ev*r.f_ev+wRaw.exec*r.f_exec+wRaw.rank*r.f_rank+wRaw.gap*r.f_gap+wRaw.capeff*r.f_capeff+wRaw.price*r.f_price+wRaw.own*r.f_own)/wSum;
+    r.triage=(r.runway!=null&&r.runway<6&&(r.exec01==null?1:r.exec01)<0.4&&r.rankScore01<0.4);
+    r.score=roClamp(100*base*(r.triage?0.15:1)+(_roConv[r.i]||0)*5,0,100);
+  });
+
+  // ── allocation ──
+  function allocFollowOn(amount){
+    const elig=rows.filter(r=>r.proRata&&!r.triage).sort((a,b)=>b.score-a.score);
+    let rem=amount, ret=0; const map={};
+    elig.forEach(r=>{
+      if(rem<=0.001)return;
+      const cap=concCap*pool;
+      const want=r.maintain>0.01? r.maintain : cap*0.25;
+      const a=Math.min(want,cap,rem);
+      map[r.i]=a; rem-=a; ret+=a*r.marginalMOIC;
+    });
+    return {map,ret,deployed:amount-rem};
+  }
+  const foPool=pool*(1-splitNew), niPool=pool*splitNew;
+  const fo=allocFollowOn(foPool);
+  rows.forEach(r=>r.alloc=fo.map[r.i]||0);
+
+  // new initials
+  const mix={pre:roGV('ro-mix-pre',40)/100,seed:roGV('ro-mix-seed',40)/100,serA:roGV('ro-mix-serA',20)/100};
+  const stageIdx={pre:1,seed:2,serA:4};
+  let shots=0,niReturn=0; const niDetail=[];
+  ['pre','seed','serA'].forEach(k=>{
+    const b=niPool*mix[k], si=stageIdx[k], st=stageData[si];
+    const moic=(st.own*(1-st.dil)*exits[si])/st.entry;
+    const n=Math.floor(b/st.entry);
+    shots+=n; niReturn+=b*moic; niDetail.push({stage:st.name,n,moic,b});
+  });
+  const totalReturn=fo.ret+niReturn;
+  const baseline=allocFollowOn(pool);                 // 100% follow-on reference
+  const deltaDPI=(totalReturn-baseline.ret)/FUND_SIZE;
+  const foCount=Object.keys(fo.map).filter(k=>fo.map[k]>0.01).length;
+
+  // ── render KPIs ──
+  const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
+  set('ro-kpi-shots',shots);
+  set('ro-kpi-shots-sub',roM(niPool)+' at '+Math.round(splitNew*100)+'% of pool');
+  set('ro-kpi-foco',roM(fo.deployed));
+  set('ro-kpi-foco-sub',foCount+' companies defended');
+  set('ro-kpi-return',roM(totalReturn));
+  set('ro-kpi-return-sub','FO '+roM(fo.ret)+' + new '+roM(niReturn));
+  const dEl=document.getElementById('ro-kpi-delta');
+  if(dEl){dEl.textContent=(deltaDPI>=0?'+':'')+deltaDPI.toFixed(2)+'×';dEl.style.color=deltaDPI>=0?'var(--green-light)':'var(--red,#e05252)';}
+  const niMoic=niPool>0?niReturn/niPool:0, foMoic=fo.deployed>0?fo.ret/fo.deployed:0;
+  set('ro-sim-summary','New initials return '+niMoic.toFixed(2)+'× per reserve $ ('+shots+' shots: '+niDetail.map(x=>x.n+' '+x.stage).join(', ')+'). Follow-on returns '+foMoic.toFixed(2)+'× per reserve $ into '+foCount+' priority names. '+(niMoic>foMoic?'New initials show higher expected return per dollar at this split — supports Saxon’s shots-on-goal tilt.':'Follow-on shows higher expected return per dollar — concentration into existing winners outperforms at this split.')+' Exit scenario: '+exitsKey+'. Note: new-initial returns assume the planning model’s stage hit-rate is already embedded in exit PMVs; they are undiversified expected values, not risk-adjusted for the higher loss rate of brand-new positions.');
+
+  // ── render priority table ──
+  const tb=document.getElementById('ro-priority-tbody');
+  if(tb){
+    const sorted=[...rows].sort((a,b)=>b.score-a.score);
+    tb.innerHTML=sorted.map(r=>{
+      const sc=r.score, scColor=sc>=66?'var(--green-light)':sc>=40?'var(--amber)':'var(--text-dim)';
+      const runTxt=r.runway==null?'<span style="color:var(--amber);" title="No Q1 2026 submission">no data</span>':(r.runway.toFixed(1)+'mo');
+      return `<tr${r.triage?' style="opacity:.55;"':''}>
+        <td>${r.rankPos}</td>
+        <td><strong>${r.name}</strong>${r.m.breakout?' <span style="color:var(--purple,#a78bfa);font-size:9px;font-weight:700;" title="Highest binary breakout potential in the portfolio">⚡BREAKOUT</span>':''}${r.triage?' <span class="hint" title="Short runway + weak execution + low rank">triage</span>':''}</td>
+        <td><strong style="color:${scColor};">${sc.toFixed(0)}</strong></td>
+        <td>${r.marginalMOIC.toFixed(2)}×</td>
+        <td>${roM(r.EV)}<br><span style="font-size:9px;color:var(--text-muted);">P=${(r.P*100).toFixed(0)}%</span></td>
+        <td>${r.exec01==null?'<span style="color:var(--text-muted);">n/a</span>':(r.exec01*1.5).toFixed(2)+'×'}</td>
+        <td>${roPct(r.entryOwn)} / ${roPct(r.targetOwn)}</td>
+        <td>${runTxt}</td>
+        <td>${r.proRata?'<span class="delta d-up">yes</span>':'<span class="delta d-dn">no</span>'}</td>
+        <td><input type="number" min="-2" max="2" step="1" value="${_roConv[r.i]||0}" onchange="_roConv[${r.i}]=parseInt(this.value)||0;buildReserveOpt();" style="width:48px;background:var(--card2);border:1px solid var(--border);color:var(--text);padding:3px;border-radius:4px;"></td>
+        <td><strong>${r.alloc>0.005?roM(r.alloc):'<span style="color:var(--text-muted);">—</span>'}</strong></td>
+      </tr>`;
+    }).join('');
+  }
+
+  // ── render runway watch ──
+  const cur=getLastReportingQuarter();const curQ=cur.y*4+(cur.q+1); // current quarter index (last reported +1)
+  const wb=document.getElementById('ro-runway-tbody');
+  if(wb){
+    const watch=rows.map(r=>{
+      const pq=_roParseQ(r.nextRaiseQ);
+      const qAway=pq?(pq.y*4+pq.q)-curQ:null;
+      const flagRunway=(r.runway!=null&&r.runway<=9);
+      const flagRaise=(qAway!=null&&qAway>=0&&qAway<=3);
+      const flagPast=(qAway!=null&&qAway<0);
+      const flagGap=(r.runway==null);
+      return {...r,pq,qAway,flag:(flagRunway||flagRaise||flagPast||flagGap),flagRunway,flagRaise,flagPast,flagGap};
+    }).filter(r=>r.flag).sort((a,b)=>{
+      const ar=a.runway==null?999:a.runway, br=b.runway==null?999:b.runway;return ar-br;
+    });
+    const action=(r)=>{
+      const weak=(r.exec01!=null&&r.exec01<0.45)||(r.m.yoyGrowth!=null&&r.m.yoyGrowth<0);
+      if(r.m.raiseNote) return ['<span style="color:var(--green-light);">Signed $'+r.m.safeCap+'M post-money SAFE cap ('+(r.m.actualRaiseQ||'')+') — raise closed, runway extended.</span> <span style="color:var(--amber);">Alleged separate $'+r.m.safeAllegedCap+'M SAFE: UNCONFIRMED, verify before relying.</span>','var(--text)'];
+      if(r.flagGap) return ['Data gap — request updated financials before any reserve decision','var(--amber)'];
+      if(r.runway!=null&&r.runway<6){
+        if(weak||!r.proRata) return ['Critical (<6mo) + weak momentum — triage: bridge only to clear milestones, or prepare wind-down','var(--red,#e05252)'];
+        return ['Critical (<6mo) — decision needed now: pre-empt an inside round to lock ownership','var(--red,#e05252)'];
+      }
+      if(r.flagPast) return ['Raise date passed — confirm the round closed; update actual raise quarter','var(--amber)'];
+      if(r.runway!=null&&r.runway<=9&&r.proRata&&r.score>=58) return ['Pre-empt — offer to lead/bridge now to lock ownership ahead of the markup','var(--green-light)'];
+      if(r.entryOwn<r.targetOwn&&r.proRata) return ['Exercise pro-rata + request super-pro-rata to close the ownership gap','var(--blue)'];
+      if(r.runway!=null&&r.runway<=9) return ['Monitor — engage on round timing; size reserve to pro-rata','var(--text-dim)'];
+      return ['Monitor — raise on the horizon; confirm timing and pro-rata sizing','var(--text-dim)'];
+    };
+    wb.innerHTML=watch.map(r=>{
+      const [act,col]=action(r);
+      const runCol=r.runway==null?'var(--amber)':r.runway<6?'var(--red,#e05252)':r.runway<=9?'var(--amber)':'var(--text)';
+      return `<tr>
+        <td><strong>${r.name}</strong></td>
+        <td style="color:${runCol};font-weight:600;">${r.runway==null?'no data':r.runway.toFixed(1)+'mo'}</td>
+        <td>${r.cash==null?'—':roM(r.cash)}</td>
+        <td>${r.burn==null?'—':'$'+(r.burn/1e6).toFixed(2)+'M'}</td>
+        <td>${r.nextRaiseQ||'<span style="color:var(--text-muted);">—</span>'}${r.flagPast?' <span class="hint">(past)</span>':''}</td>
+        <td>${r.proRata?'yes':'no'}</td>
+        <td>${roPct(r.entryOwn)}</td>
+        <td>${roM(r.maintain)}</td>
+        <td style="color:${col};font-size:11px;">${act}</td>
+      </tr>`;
+    }).join('');
+    if(!watch.length) wb.innerHTML='<tr><td colspan="9" style="color:var(--text-muted);">No companies flagged in the next 2-3 quarters.</td></tr>';
+  }
+}
 
 function buildExecutionScore(){
   const body=document.getElementById('execScoreBody');
