@@ -549,9 +549,34 @@
     <div id="ro-sim-summary" style="font-size:11px;color:var(--text-muted);margin-top:10px;line-height:1.5;"></div>
   </div>
 
+  <!-- SECTION 1b: AD-HOC FOLLOW-ON -->
+  <div class="card mb">
+    <div class="card-title">1b · Ad-hoc Follow-on Simulator <span class="hint">marginal economics of one additional check into a single position</span></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:10px 0 4px;">
+      <label style="font-size:11px;color:var(--text-dim);">Company<br><select id="ro-ah-co" onchange="roAdhocCompanyChange()" style="width:100%;margin-top:4px;background:var(--card2);border:1px solid var(--border);color:var(--text);padding:5px;border-radius:5px;">
+        <option value="0">Archive Technologies</option><option value="1">Autonoma</option><option value="2">Brox AI</option><option value="3">Curated For You</option><option value="4">IRIS AI</option><option value="5">Liminal AI</option><option value="6">Manifest</option><option value="7">OpenHome Technologies</option><option value="8">RapidFort</option><option value="9">Rebel Corporation</option><option value="10">Vali Cyber</option><option value="11">Worth AI</option><option value="12">Youth Enrichments</option><option value="13">Opus Health</option><option value="14" selected>Acceler8</option>
+      </select></label>
+      <label style="font-size:11px;color:var(--text-dim);">Additional check ($M)<br><input id="ro-ah-amt" type="number" step="0.05" value="0.25" oninput="buildAdhocFollowOn()" style="width:100%;margin-top:4px;background:var(--card2);border:1px solid var(--border);color:var(--text);padding:5px;border-radius:5px;"></label>
+      <label style="font-size:11px;color:var(--text-dim);">Follow-on cap / price ($M)<br><input id="ro-ah-cap" type="number" step="1" value="30" oninput="buildAdhocFollowOn()" style="width:100%;margin-top:4px;background:var(--card2);border:1px solid var(--border);color:var(--text);padding:5px;border-radius:5px;"></label>
+      <label style="font-size:11px;color:var(--text-dim);">P(breakout outcome) %<br><input id="ro-ah-p" type="number" step="1" value="12" oninput="buildAdhocFollowOn()" style="width:100%;margin-top:4px;background:var(--card2);border:1px solid var(--border);color:var(--text);padding:5px;border-radius:5px;"></label>
+    </div>
+    <div class="kpi-row kpi-4" style="margin-top:12px;">
+      <div class="kpi g"><div class="kpi-label">Marginal MOIC</div><div class="kpi-val" id="ro-ah-moic">—</div><div class="kpi-sub" id="ro-ah-moic-sub"></div></div>
+      <div class="kpi b"><div class="kpi-label">Marginal Gross Return</div><div class="kpi-val" id="ro-ah-ret">—</div><div class="kpi-sub" id="ro-ah-ret-sub"></div></div>
+      <div class="kpi t"><div class="kpi-label">Marginal Gross DPI</div><div class="kpi-val" id="ro-ah-dpi">—</div><div class="kpi-sub">on $43M fund</div></div>
+      <div class="kpi a"><div class="kpi-label">Ownership</div><div class="kpi-val" id="ro-ah-own">—</div><div class="kpi-sub" id="ro-ah-own-sub"></div></div>
+    </div>
+    <div id="ro-ah-note" style="font-size:11px;color:var(--text-muted);margin-top:10px;line-height:1.5;"></div>
+  </div>
+
   <!-- SECTION 2: PRIORITY SCORE -->
   <div class="card mb">
-    <div class="card-title">2 · Reserve Priority Score <span class="hint">weighted composite · marginal DPI weighted highest · edit weights &amp; conviction inline</span></div>
+    <div class="card-title" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">2 · Reserve Priority Score
+      <span class="hint" style="flex:1 1 auto;">weighted composite · marginal DPI weighted highest · edit weights, conviction &amp; your own rank inline</span>
+      <span id="ro-rank-status" style="font-size:10px;"></span>
+      <button onclick="roSaveRanks()" title="Freeze the current ordering and save it to this browser" style="font-size:11px;font-weight:600;background:var(--card2);border:1px solid var(--green-light);color:var(--green-light);padding:4px 10px;border-radius:5px;cursor:pointer;">💾 Save Ranks</button>
+      <button onclick="roResetRanks()" title="Clear your saved ranks and return to computed-score order" style="font-size:11px;font-weight:600;background:var(--card2);border:1px solid var(--border);color:var(--text-dim);padding:4px 10px;border-radius:5px;cursor:pointer;">↺ Reset</button>
+    </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:8px;margin:10px 0;padding:10px;background:var(--card2);border-radius:6px;">
       <label style="font-size:10px;color:var(--text-dim);">Marginal DPI<br><input id="ro-w-mdpi" type="number" value="25" oninput="buildReserveOpt()" style="width:100%;margin-top:3px;background:var(--card);border:1px solid var(--border);color:var(--green-light);padding:4px;border-radius:4px;font-weight:600;"></label>
       <label style="font-size:10px;color:var(--text-dim);">Exp. Value ×P<br><input id="ro-w-ev" type="number" value="15" oninput="buildReserveOpt()" style="width:100%;margin-top:3px;background:var(--card);border:1px solid var(--border);color:var(--text);padding:4px;border-radius:4px;"></label>
@@ -565,7 +590,7 @@
     <div style="overflow-x:auto;">
     <table class="dt">
       <thead><tr>
-        <th>#</th><th>Company</th><th>Score</th><th title="Marginal MOIC on the next reserve dollar at the follow-on round price">Marg. MOIC</th><th title="Expected exit value of our stake × probability of outcome">E×P ($M)</th><th title="Q1 2026 forecast ÷ 2026 board plan">Exec</th><th>Own% / Tgt</th><th title="Months of runway (Q1 2026)">Runway</th><th title="Pro rata rights available">Pro-rata</th><th title="Conviction override, -2 to +2">Conv ✎</th><th title="Recommended follow-on allocation under current split">Rec $</th>
+        <th>#</th><th>Company</th><th title="Your manual rank — type a number to override the computed sort, then Save Ranks to persist in this browser">My Rank ✎</th><th>Score</th><th title="Marginal MOIC on the next reserve dollar at the follow-on round price">Marg. MOIC</th><th title="Expected exit value of our stake × probability of outcome">E×P ($M)</th><th title="Q1 2026 forecast ÷ 2026 board plan">Exec</th><th>Own% / Tgt</th><th title="Months of runway (Q1 2026)">Runway</th><th title="Pro rata rights available">Pro-rata</th><th title="Conviction override, -2 to +2">Conv ✎</th><th title="Recommended follow-on allocation under current split">Rec $</th>
       </tr></thead>
       <tbody id="ro-priority-tbody"></tbody>
     </table>
@@ -743,7 +768,7 @@
 
   <!-- Named Pipeline Deal Toggles -->
   <div class="card mb">
-    <div class="card-title">Active Pipeline Deals — Toggle to Include in Scenario <span class="hint">5 deals · IC + Late Diligence only</span></div>
+    <div class="card-title">Active Pipeline Deals — Toggle to Include in Scenario <span class="hint">IC + Late Diligence · toggle to include in scenario</span></div>
     <div style="display:grid;grid-template-columns:36px 1fr 120px 80px 80px 68px 88px 82px;gap:0;padding:6px 4px 9px;border-bottom:2px solid var(--border);">
       <div></div>
       <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text-dim);">Company</div>
@@ -1594,6 +1619,9 @@ const pipelineDeals=[
   {name:"Circuitry", si:2, check:1.000, pmv:25.0, exitCustom:400,
    stageLabel:"Seed", chip:"c-seed", hsStage:"Pending",
    overIndexed:false, gapNote:"check $750K–$1.25M (midpoint used) · $25M post"},
+  {name:"PX Systems", si:1, check:1.000, pmv:20.0, exitCustom:250,
+   stageLabel:"Preseed", chip:"c-pre", hsStage:"Late Diligence",
+   overIndexed:false, gapNote:"MONITOR ONLY · not in HubSpot · $1M at $20M post (5.0% own) · exit = Preseed stage default ($250M), no diligence assumption yet · added 2026-06-24"},
 ];
 
 // Both pending deals default to selected
@@ -1724,7 +1752,7 @@ function updateSensitivity(){
   const exits=exitAssumptions[currentExit];
   const base13=actualDeals.reduce((s,d)=>s+calcGrossReturn(d,exits),0);
   const curr13DPI=base13/FUND_SIZE;
-  const gailGross=pipelineDeals.reduce((s,d)=>s+calcGrossReturnPipeline(d),0);
+  const gailGross=pipelineDeals.filter(d=>d.hsStage==='Pending').reduce((s,d)=>s+calcGrossReturnPipeline(d),0);
   const withGailDPI=(base13+gailGross)/FUND_SIZE;
 
   // Selected deals
@@ -1755,12 +1783,15 @@ function updateSensitivity(){
   bEl.style.color=budgetLeft<2?'var(--red)':budgetLeft<5?'var(--amber)':'var(--green-light)';
 
   // Scenario table
+  const pendingDeals=pipelineDeals.filter(d=>d.hsStage==='Pending');
+  const pendInit=pendingDeals.reduce((s,d)=>s+d.check,0);
+  const pendGross=pendingDeals.reduce((s,d)=>s+calcGrossReturnPipeline(d),0);
   const allPipeGross=pipelineDeals.reduce((s,d)=>s+calcGrossReturnPipeline(d),0);
   const allPipeInit=pipelineDeals.reduce((s,d)=>s+d.check,0);
   const rows=[
     {label:'Closed — 15 deals',deals:15,cap:12.27,gross:base13},
-    {label:'+ All 2 Pending (init.)',deals:17,cap:12.27+allPipeInit,gross:base13+allPipeGross},
-    {label:'+ All 2 Pipeline (init.)',deals:17,cap:12.27+allPipeInit,gross:base13+allPipeGross},
+    {label:'+ All '+pendingDeals.length+' Pending (init.)',deals:15+pendingDeals.length,cap:12.27+pendInit,gross:base13+pendGross},
+    {label:'+ All '+pipelineDeals.length+' Pipeline incl. monitor (init.)',deals:15+pipelineDeals.length,cap:12.27+allPipeInit,gross:base13+allPipeGross},
     {label:'Your Selection ('+selCount+' pipeline)',deals:15+selCount,cap:12.27+selInit,gross:base13+selGross,highlight:true},
   ];
   document.getElementById('scenTableBody').innerHTML=rows.map(r=>`
@@ -2425,6 +2456,10 @@ Object.assign(portfolioMeta[7],{
   breakout:true,          // highest binary breakout potential in the portfolio
   convDefault:2           // default conviction override (+2) seeded into the priority score
 });
+
+// Acceler8 (index 14): prospective top-up SAFE cap for the ad-hoc follow-on default.
+// No contractual pro rata (proRata:false) — an additional check would need to be negotiated.
+Object.assign(portfolioMeta[14],{followCap:30});
 
 let rankExit='base';
 let rankSort='dpi';
@@ -3468,16 +3503,41 @@ function fmtPct(v){return v==null?'—':(v*100).toFixed(0)+'%';}
 // (runway/burn/arr), and the 2026 BAP / Q1 forecast for execution attainment.
 let _roConv=null;     // per-company conviction override (-2..+2)
 let _roP=null;        // per-company P(outcome) override (fraction); null = derived
+let _roManualRank=null;   // {companyIndex: rank}. Manual override of the score sort. Persisted to localStorage.
+let _roRanksSavedAt=null;  // ISO timestamp of last save
+let _roLastOrder=[];       // company indices in current display order (for Save to freeze)
+const RO_RANK_KEY='flf_reservePriorityRanks_v1';
 function roGV(id,def){const el=document.getElementById(id);if(!el)return def;const v=parseFloat(el.value);return isFinite(v)?v:def;}
 function roClamp(v,a,b){return Math.max(a,Math.min(b,v));}
 function roM(x){return (x<0?'-$':'$')+Math.abs(x).toFixed(2)+'M';}
 function roPct(x){return (x*100).toFixed(1)+'%';}
 function _roParseQ(str){if(!str||!str.trim())return null;const m=str.trim().match(/^Q([1-4])\s*(\d{4})$/i);return m?{q:+m[1],y:+m[2]}:null;}
 
+// Reserve priority manual ranking — load once from localStorage, persist on save.
+function roLoadRanksOnce(){
+  if(_roManualRank!==null) return;
+  _roManualRank={}; _roRanksSavedAt=null;
+  try{const s=localStorage.getItem(RO_RANK_KEY);if(s){const o=JSON.parse(s);if(o&&o.ranks){Object.keys(o.ranks).forEach(k=>{_roManualRank[+k]=o.ranks[k];});_roRanksSavedAt=o.savedAt||null;}}}catch(e){console.error('roLoadRanks:',e);}
+}
+function roSetRank(i,v){const n=parseInt(v);if(isFinite(n)&&n>0)_roManualRank[i]=n;else delete _roManualRank[i];buildReserveOpt();}
+function roSaveRanks(){
+  // Freeze the current visible order as ranks 1..N (honors any manual ranks already typed).
+  _roManualRank={}; _roLastOrder.forEach((idx,pos)=>{_roManualRank[idx]=pos+1;});
+  _roRanksSavedAt=new Date().toISOString();
+  try{localStorage.setItem(RO_RANK_KEY,JSON.stringify({ranks:_roManualRank,savedAt:_roRanksSavedAt}));}catch(e){console.error('roSaveRanks:',e);}
+  buildReserveOpt();
+}
+function roResetRanks(){
+  _roManualRank={}; _roRanksSavedAt=null;
+  try{localStorage.removeItem(RO_RANK_KEY);}catch(e){}
+  buildReserveOpt();
+}
+
 function buildReserveOpt(){
   const N=13;
   if(!_roConv) _roConv=Array.from({length:N},(_,i)=>portfolioMeta[i].convDefault||0);
   if(!_roP)    _roP=Array(N).fill(null);
+  roLoadRanksOnce();
   const exitsKey=(document.getElementById('ro-exit')||{}).value||'base';
   const exits=exitAssumptions[exitsKey];
   const stepUp=roGV('ro-stepup',2.0);
@@ -3582,13 +3642,19 @@ function buildReserveOpt(){
   // ── render priority table ──
   const tb=document.getElementById('ro-priority-tbody');
   if(tb){
-    const sorted=[...rows].sort((a,b)=>b.score-a.score);
-    tb.innerHTML=sorted.map(r=>{
+    const hasManual=Object.keys(_roManualRank).length>0;
+    const sorted=[...rows].sort((a,b)=>{
+      if(hasManual){const ra=(_roManualRank[a.i]!=null?_roManualRank[a.i]:999),rb=(_roManualRank[b.i]!=null?_roManualRank[b.i]:999);if(ra!==rb)return ra-rb;}
+      return b.score-a.score;
+    });
+    _roLastOrder=sorted.map(r=>r.i);
+    tb.innerHTML=sorted.map((r,pos)=>{
       const sc=r.score, scColor=sc>=66?'var(--green-light)':sc>=40?'var(--amber)':'var(--text-dim)';
       const runTxt=r.runway==null?'<span style="color:var(--amber);" title="No Q1 2026 submission">no data</span>':(r.runway.toFixed(1)+'mo');
       return `<tr${r.triage?' style="opacity:.55;"':''}>
-        <td>${r.rankPos}</td>
+        <td>${pos+1}</td>
         <td><strong>${r.name}</strong>${r.m.breakout?' <span style="color:var(--purple,#a78bfa);font-size:9px;font-weight:700;" title="Highest binary breakout potential in the portfolio">⚡BREAKOUT</span>':''}${r.triage?' <span class="hint" title="Short runway + weak execution + low rank">triage</span>':''}</td>
+        <td><input type="number" min="1" value="${_roManualRank[r.i]!=null?_roManualRank[r.i]:''}" placeholder="—" onchange="roSetRank(${r.i},this.value)" style="width:46px;background:var(--card2);border:1px solid var(--border);color:var(--text);padding:3px;border-radius:4px;"></td>
         <td><strong style="color:${scColor};">${sc.toFixed(0)}</strong></td>
         <td>${r.marginalMOIC.toFixed(2)}×</td>
         <td>${roM(r.EV)}<br><span style="font-size:9px;color:var(--text-muted);">P=${(r.P*100).toFixed(0)}%</span></td>
@@ -3600,6 +3666,12 @@ function buildReserveOpt(){
         <td><strong>${r.alloc>0.005?roM(r.alloc):'<span style="color:var(--text-muted);">—</span>'}</strong></td>
       </tr>`;
     }).join('');
+    const st=document.getElementById('ro-rank-status');
+    if(st){
+      if(hasManual&&_roRanksSavedAt){st.textContent='✓ saved '+new Date(_roRanksSavedAt).toLocaleDateString();st.style.color='var(--green-light)';}
+      else if(hasManual){st.textContent='custom order · unsaved';st.style.color='var(--amber)';}
+      else{st.textContent='live · computed-score order';st.style.color='var(--text-muted)';}
+    }
   }
 
   // ── render runway watch ──
@@ -3648,6 +3720,46 @@ function buildReserveOpt(){
     }).join('');
     if(!watch.length) wb.innerHTML='<tr><td colspan="9" style="color:var(--text-muted);">No companies flagged in the next 2-3 quarters.</td></tr>';
   }
+  try{buildAdhocFollowOn();}catch(e){console.error('adhoc:',e);}
+}
+
+// ── AD-HOC FOLLOW-ON: marginal economics of one extra check into a single name ──
+// Covers all 15 positions. Follow-on price defaults to the company's confirmed
+// current SAFE cap (safeCap), then a prospective top-up cap (followCap), else the
+// entry PMV times the global step-up. Marginal MOIC = (1-dil)*exitPMV/cap.
+function roAdhocCompanyChange(){
+  const i=parseInt(document.getElementById('ro-ah-co').value);if(isNaN(i))return;
+  const m=portfolioMeta[i], d=actualDeals[i], stepUp=roGV('ro-stepup',2.0);
+  const def=(m.safeCap!=null?m.safeCap:(m.followCap!=null?m.followCap:(d.pmv?Math.round(d.pmv*stepUp):'')));
+  const capEl=document.getElementById('ro-ah-cap');if(capEl)capEl.value=def;
+  buildAdhocFollowOn();
+}
+function buildAdhocFollowOn(){
+  const co=document.getElementById('ro-ah-co');if(!co)return;
+  const i=parseInt(co.value);if(isNaN(i))return;
+  const m=portfolioMeta[i], d=actualDeals[i], s=stageData[d.si];
+  const exitsKey=(document.getElementById('ro-exit')||{}).value||'base';
+  const exits=exitAssumptions[exitsKey];
+  const amt=roGV('ro-ah-amt',0.25);
+  const cap=roGV('ro-ah-cap',(d.pmv||25)*roGV('ro-stepup',2.0));
+  const P=roClamp(roGV('ro-ah-p',12)/100,0,1);
+  const entryOwn=d.pmv? d.check/d.pmv : s.own;
+  const exit=exits[d.si], dil=s.dil;
+  const margOwn=cap>0? amt/cap : 0, newOwn=entryOwn+margOwn;
+  const moic=cap>0? (1-dil)*exit/cap : 0;
+  const ret=amt*moic, dpi=ret/FUND_SIZE;
+  const expMoic=moic*P;
+  const set=(id,v)=>{const el=document.getElementById(id);if(el)el.innerHTML=v;};
+  set('ro-ah-moic',moic.toFixed(1)+'×');
+  set('ro-ah-moic-sub','exp. '+expMoic.toFixed(1)+'× @ P='+Math.round(P*100)+'%');
+  set('ro-ah-ret',roM(ret));
+  set('ro-ah-ret-sub','exp. '+roM(ret*P));
+  set('ro-ah-dpi','+'+dpi.toFixed(3)+'×');
+  set('ro-ah-own',roPct(entryOwn)+' → '+roPct(newOwn));
+  set('ro-ah-own-sub','+'+roPct(margOwn)+' vs '+roPct(s.own)+' target');
+  const overTgt=newOwn>s.own;
+  const prn=m.proRata?'Pro-rata: contractual (yes).':'<span style="color:var(--amber);">Pro-rata: none — must be negotiated.</span>';
+  set('ro-ah-note', '<strong>'+portfolioCompanies[i]+'</strong> ('+s.name+'): a '+roM(amt)+' check at a $'+cap+'M cap buys '+roPct(margOwn)+', taking ownership '+roPct(entryOwn)+' → '+roPct(newOwn)+(overTgt?' (above the '+roPct(s.own)+' stage target, so ownership-building beyond pro-rata).':' (toward the '+roPct(s.own)+' stage target).')+' Marginal MOIC <strong>'+moic.toFixed(1)+'×</strong> if it reaches the '+exitsKey+'-case exit ($'+exit+'M), <strong>'+expMoic.toFixed(1)+'×</strong> probability-weighted at P='+Math.round(P*100)+'%. '+prn+' Exit PMVs are stage planning assumptions, not company-specific; P is your input for the binary outcome.');
 }
 
 function buildExecutionScore(){
