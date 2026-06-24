@@ -540,6 +540,12 @@
       <label style="font-size:11px;color:var(--text-dim);">Seed (entry $0.70M)<br><input id="ro-mix-seed" type="number" step="5" value="40" oninput="buildReserveOpt()" style="width:100%;margin-top:4px;background:var(--card2);border:1px solid var(--border);color:var(--text);padding:5px;border-radius:5px;"></label>
       <label style="font-size:11px;color:var(--text-dim);">Series A (entry $1.00M)<br><input id="ro-mix-serA" type="number" step="5" value="20" oninput="buildReserveOpt()" style="width:100%;margin-top:4px;background:var(--card2);border:1px solid var(--border);color:var(--text);padding:5px;border-radius:5px;"></label>
     </div>
+    <div style="margin-top:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+      <span style="font-size:11px;color:var(--text-dim);">Stage reserve ratios <span class="hint">planning model · % of initial check · drives reserve budget &amp; the Construction tab</span></span>
+      <span id="ro-stageres-blended" style="font-size:11px;font-weight:700;color:var(--teal,#3fcfcf);"></span>
+      <button onclick="roResetAssumptions()" title="Restore default reserve ratios and clear per-company reserve overrides" style="font-size:10px;font-weight:600;background:var(--card2);border:1px solid var(--border);color:var(--text-dim);padding:3px 9px;border-radius:5px;cursor:pointer;">↺ reset assumptions</button>
+    </div>
+    <div id="ro-stageres-inputs" style="display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-top:6px;padding:10px;background:var(--card2);border-radius:6px;"></div>
     <div class="kpi-row kpi-4" style="margin-top:16px;">
       <div class="kpi t"><div class="kpi-label">New Shots on Goal</div><div class="kpi-val" id="ro-kpi-shots">—</div><div class="kpi-sub" id="ro-kpi-shots-sub">new initial checks</div></div>
       <div class="kpi g"><div class="kpi-label">Follow-on Deployed</div><div class="kpi-val" id="ro-kpi-foco">—</div><div class="kpi-sub" id="ro-kpi-foco-sub">companies defended</div></div>
@@ -590,7 +596,7 @@
     <div style="overflow-x:auto;">
     <table class="dt">
       <thead><tr>
-        <th>#</th><th>Company</th><th title="Your manual rank — type a number to override the computed sort, then Save Ranks to persist in this browser">My Rank ✎</th><th>Score</th><th title="Marginal MOIC on the next reserve dollar at the follow-on round price">Marg. MOIC</th><th title="Expected exit value of our stake × probability of outcome">E×P ($M)</th><th title="Q1 2026 forecast ÷ 2026 board plan">Exec</th><th>Own% / Tgt</th><th title="Months of runway (Q1 2026)">Runway</th><th title="Pro rata rights available">Pro-rata</th><th title="Conviction override, -2 to +2">Conv ✎</th><th title="Recommended follow-on allocation under current split">Rec $</th>
+        <th>#</th><th>Company</th><th title="Your manual rank — type a number to override the computed sort, then Save Ranks to persist in this browser">My Rank ✎</th><th>Score</th><th title="Marginal MOIC on the next reserve dollar at the follow-on round price">Marg. MOIC</th><th title="Expected exit value of our stake × probability of outcome">E×P ($M)</th><th title="Q1 2026 forecast ÷ 2026 board plan">Exec</th><th>Own% / Tgt</th><th title="Months of runway (Q1 2026)">Runway</th><th title="Pro rata rights available">Pro-rata</th><th title="Conviction override, -2 to +2">Conv ✎</th><th title="Override the reserve target for this company ($M). Blank = pro-rata to maintain (shown as placeholder).">Target $ ✎</th><th title="Recommended follow-on allocation under current split">Rec $</th>
       </tr></thead>
       <tbody id="ro-priority-tbody"></tbody>
     </table>
@@ -768,7 +774,7 @@
 
   <!-- Named Pipeline Deal Toggles -->
   <div class="card mb">
-    <div class="card-title">Active Pipeline Deals — Toggle to Include in Scenario <span class="hint">IC + Late Diligence · toggle to include in scenario</span></div>
+    <div class="card-title">Active Pipeline Deals — Toggle to Include in Scenario <span class="hint">Pending + IC + Late Diligence · toggle to include in scenario</span></div>
     <div style="display:grid;grid-template-columns:36px 1fr 120px 80px 80px 68px 88px 82px;gap:0;padding:6px 4px 9px;border-bottom:2px solid var(--border);">
       <div></div>
       <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text-dim);">Company</div>
@@ -1249,6 +1255,9 @@ const stageData=[
   {name:'Series B', chip:'c-serB',  entry:1.75,res:0.00,own:0.014,dil:0.30,gap:0},
 ];
 
+// Apply any saved reserve-ratio assumptions before charts/calcs build (editable on Reserve Strategy tab).
+(function(){try{const s=localStorage.getItem('flf_reserveAssumptions_v1');if(s){const o=JSON.parse(s);if(o&&Array.isArray(o.stageRes))o.stageRes.forEach((v,i)=>{if(stageData[i]&&isFinite(v))stageData[i].res=v;});}}catch(e){}})();
+
 function totalCapPerDeal(s){return s.entry*(1+s.res);}
 function grossReturnPerDeal(s,exitIdx){
   const exit=exitAssumptions[currentExit][exitIdx];
@@ -1532,7 +1541,7 @@ new Chart(document.getElementById('totalStageChart'),{type:'bar',
 
 // ── CHART: RESERVE RATIO ─────────────────────────────────────────────────────
 new Chart(document.getElementById('reserveChart'),{type:'bar',
-  data:{labels:stages7,datasets:[{label:'Reserve %',data:[66,50,50,75,50,125,0],
+  data:{labels:stages7,datasets:[{label:'Reserve %',data:stageData.map(s=>Math.round(s.res*100)),
     backgroundColor:sc7.map(c=>c+'99'),borderColor:sc7,borderWidth:1.5,borderRadius:4}]},
   options:{responsive:true,maintainAspectRatio:false,
     plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${c.raw}%`}}},
@@ -1675,6 +1684,7 @@ function buildPipelineDealRows(){
 
   // Stage group config — ordered most-to-least advanced
   const stageGroups=[
+    {key:'Pending',     label:'Pending / Verbal Commit', color:'var(--purple,#a78bfa)', bg:'rgba(167,139,250,.06)', badgeBg:'rgba(167,139,250,.14)'},
     {key:'IC',          label:'IC',             color:'var(--green-light)', bg:'rgba(39,162,100,.08)',  badgeBg:'rgba(39,162,100,.12)'},
     {key:'Late Diligence', label:'Late Diligence', color:'var(--amber)',      bg:'rgba(245,166,35,.06)', badgeBg:'rgba(245,166,35,.12)'},
     {key:'Early Diligence',label:'Early Diligence',color:'var(--blue)',       bg:'rgba(74,158,255,.04)', badgeBg:'rgba(74,158,255,.12)'},
@@ -3507,6 +3517,9 @@ let _roManualRank=null;   // {companyIndex: rank}. Manual override of the score 
 let _roRanksSavedAt=null;  // ISO timestamp of last save
 let _roLastOrder=[];       // company indices in current display order (for Save to freeze)
 const RO_RANK_KEY='flf_reservePriorityRanks_v1';
+let _roReserveOverride=null;  // {companyIndex: $M} — manual reserve target, overrides pro-rata-to-maintain
+let _roResRendered=false;     // stage reserve-ratio inputs rendered flag
+const RO_ASSUMP_KEY='flf_reserveAssumptions_v1';
 function roGV(id,def){const el=document.getElementById(id);if(!el)return def;const v=parseFloat(el.value);return isFinite(v)?v:def;}
 function roClamp(v,a,b){return Math.max(a,Math.min(b,v));}
 function roM(x){return (x<0?'-$':'$')+Math.abs(x).toFixed(2)+'M';}
@@ -3533,11 +3546,46 @@ function roResetRanks(){
   buildReserveOpt();
 }
 
+// Reserve assumptions — per-company reserve override + editable stage reserve ratios, persisted.
+function roLoadAssumptionsOnce(){
+  if(_roReserveOverride!==null) return;
+  _roReserveOverride={};
+  try{const s=localStorage.getItem(RO_ASSUMP_KEY);if(s){const o=JSON.parse(s);
+    if(o.overrides) Object.keys(o.overrides).forEach(k=>{_roReserveOverride[+k]=o.overrides[k];});
+    if(Array.isArray(o.stageRes)) o.stageRes.forEach((v,i)=>{if(stageData[i]&&isFinite(v))stageData[i].res=v;});
+  }}catch(e){console.error('roLoadAssump:',e);}
+}
+function roPersistAssumptions(){
+  try{localStorage.setItem(RO_ASSUMP_KEY,JSON.stringify({stageRes:stageData.map(s=>s.res),overrides:_roReserveOverride}));}catch(e){console.error('roPersistAssump:',e);}
+}
+function roSetReserve(i,v){roLoadAssumptionsOnce();const n=parseFloat(v);if(isFinite(n)&&n>=0)_roReserveOverride[i]=n;else delete _roReserveOverride[i];roPersistAssumptions();buildReserveOpt();}
+function roSetStageRes(i,v){roLoadAssumptionsOnce();const n=parseFloat(v);if(isFinite(n)&&n>=0){stageData[i].res=n/100;roPersistAssumptions();buildReserveOpt();}}
+function roResetAssumptions(){
+  _roReserveOverride={};
+  [0.66,0.50,0.50,0.75,0.50,1.25,0.00].forEach((v,i)=>{if(stageData[i])stageData[i].res=v;});
+  try{localStorage.removeItem(RO_ASSUMP_KEY);}catch(e){}
+  _roResRendered=false;
+  buildReserveOpt();
+}
+function roRenderStageRes(){
+  const wrap=document.getElementById('ro-stageres-inputs');if(!wrap)return;
+  wrap.innerHTML=stageData.map((s,i)=>`<label style="font-size:10px;color:var(--text-dim);">${s.name}<br><input type="number" step="5" min="0" value="${Math.round(s.res*100)}" onchange="roSetStageRes(${i},this.value)" style="width:100%;margin-top:3px;background:var(--card);border:1px solid var(--border);color:var(--text);padding:4px;border-radius:4px;"></label>`).join('');
+  _roResRendered=true;
+}
+function roBlendedRes(){
+  const planCount=[4,5,5,3,4,4,1];let resCap=0,initCap=0;
+  stageData.forEach((s,i)=>{initCap+=planCount[i]*s.entry;resCap+=planCount[i]*s.entry*s.res;});
+  return initCap>0?resCap/initCap:0;
+}
+
 function buildReserveOpt(){
   const N=13;
   if(!_roConv) _roConv=Array.from({length:N},(_,i)=>portfolioMeta[i].convDefault||0);
   if(!_roP)    _roP=Array(N).fill(null);
   roLoadRanksOnce();
+  roLoadAssumptionsOnce();
+  if(!_roResRendered) roRenderStageRes();
+  {const bl=document.getElementById('ro-stageres-blended');if(bl)bl.textContent='blended ≈ '+(roBlendedRes()*100).toFixed(0)+'% of initial';}
   const exitsKey=(document.getElementById('ro-exit')||{}).value||'base';
   const exits=exitAssumptions[exitsKey];
   const stepUp=roGV('ro-stepup',2.0);
@@ -3601,7 +3649,7 @@ function buildReserveOpt(){
     elig.forEach(r=>{
       if(rem<=0.001)return;
       const cap=concCap*pool;
-      const want=r.maintain>0.01? r.maintain : cap*0.25;
+      const want=(_roReserveOverride[r.i]!=null)?_roReserveOverride[r.i]:(r.maintain>0.01? r.maintain : cap*0.25);
       const a=Math.min(want,cap,rem);
       map[r.i]=a; rem-=a; ret+=a*r.marginalMOIC;
     });
@@ -3663,6 +3711,7 @@ function buildReserveOpt(){
         <td>${runTxt}</td>
         <td>${r.proRata?'<span class="delta d-up">yes</span>':'<span class="delta d-dn">no</span>'}</td>
         <td><input type="number" min="-2" max="2" step="1" value="${_roConv[r.i]||0}" onchange="_roConv[${r.i}]=parseInt(this.value)||0;buildReserveOpt();" style="width:48px;background:var(--card2);border:1px solid var(--border);color:var(--text);padding:3px;border-radius:4px;"></td>
+        <td><input type="number" min="0" step="0.05" value="${_roReserveOverride[r.i]!=null?_roReserveOverride[r.i]:''}" placeholder="${r.maintain.toFixed(2)}" onchange="roSetReserve(${r.i},this.value)" style="width:58px;background:var(--card2);border:1px solid var(--border);color:var(--text);padding:3px;border-radius:4px;" title="pro-rata default: $${r.maintain.toFixed(2)}M"></td>
         <td><strong>${r.alloc>0.005?roM(r.alloc):'<span style="color:var(--text-muted);">—</span>'}</strong></td>
       </tr>`;
     }).join('');
