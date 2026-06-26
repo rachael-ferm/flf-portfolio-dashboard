@@ -2472,6 +2472,15 @@ Object.assign(portfolioMeta[7],{
 // No contractual pro rata (proRata:false) — an additional check would need to be negotiated.
 Object.assign(portfolioMeta[14],{followCap:30});
 
+// ── RESERVES DEPLOYED (canonical source, $M) ────────────────────────────────
+// Fund 3 reserve / follow-on capital actually deployed, by company. This is THE
+// single source for the Deployment Pacing "Reserves Deployed" KPIs, the capital
+// donut, the Rankings tab, and "Reserves Remaining" (= $22.48M pool − this sum).
+// Source: Investment_Tracker (FLF Investments Details) — follow-on rounds beyond
+// the initial check. Only Worth AI has a Fund 3 follow-on to date: Series A
+// (WRTH 2026.02), $393,797 on top of the 2024.08 Series Seed-1 initial. ⚡ [source 06/24]
+portfolioMeta[11].reserveDeployed=0.393797; // Worth AI — Series A follow-on
+
 let rankExit='base';
 let rankSort='dpi';
 let reserveChartInst=null;
